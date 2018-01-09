@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.ItemsBorrowerMapper" >
+
+    <select id="insertBorrower" parameterType="com.timmy.po.Borrower" >
+        <choose>
+            <when test="borrowerid!=null">
+                insert into borrower values (${borrowerid},"${borrowername}", "${borrowernum}","${borrowerclass}", "${borrowerdepartment}");
+
+            </when>
+            <otherwise>
+                insert into borrower values (NULL ,"${borrowername}", "${borrowernum}","${borrowerclass}", "${borrowerdepartment}");
+
+            </otherwise>
+        </choose>
+
+    </select>
+
+    <select id="findItemsBorrowers"  resultType="com.timmy.po.ItemsBorrower">
+        SELECT * from Borrower
+
+    </select>
+
+        <select id="querySomeBorrowerinfos"  parameterType="com.timmy.utils.BorrowerInfoQueryVo" resultType="com.timmy.po.ItemsBorrower">
+            select * FROM borrower WHERE borrowername like '%${paraBean.name}%' LIMIT ${paraBean.begin},${paraBean.pageSize};
+        </select>
+
+        <select id="getBorrowerCount"  resultType="java.lang.Integer">
+            select count(*) from borrower;
+        </select>
+
+        <select id="pagedQuery"   resultType="com.timmy.po.ItemsBorrower">
+            select * from borrower LIMIT #{0},#{1};
+        </select>
+
+        <select id="querySomeBorrowerinfosCount" parameterType="java.lang.String"  resultType="java.lang.Integer">
+            select COUNT(*) from borrower where borrowername like '%${value}%'  ;
+        </select>
+
+</mapper>

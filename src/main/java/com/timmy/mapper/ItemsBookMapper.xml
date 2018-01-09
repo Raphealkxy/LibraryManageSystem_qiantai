@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.ItemsBookMapper" >
+
+
+    <select id="findItemsBookinfos"  resultType="com.timmy.po.ItemsBook">
+        SELECT * from Bookinfo
+
+    </select>
+
+    <select id="querySomeBookinfos"  parameterType="com.timmy.utils.BookInfoQueryVo" resultType="com.timmy.po.ItemsBook">
+        select * FROM bookinfo WHERE bookname like '%${paraBean.name}%' LIMIT ${paraBean.begin},${paraBean.pageSize};
+    </select>
+
+    <select id="getBookinfoCount"  resultType="java.lang.Integer">
+        select count(*) from bookinfo;
+    </select>
+
+    <select id="pagedQuery"   resultType="com.timmy.po.ItemsBook">
+        select * from bookinfo LIMIT #{0},#{1};
+    </select>
+
+    <select id="querySomeBookinfosCount" parameterType="java.lang.String"  resultType="java.lang.Integer">
+        select COUNT(*) from bookinfo where bookname like '%${value}%'  ;
+    </select>
+
+
+</mapper>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.BookMapper" >
+  <resultMap id="BaseResultMap" type="com.timmy.po.Book" >
+    <id column="bid" property="bid" jdbcType="INTEGER" />
+    <result column="bname" property="bname" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="bdesc1" property="bdesc1" jdbcType="VARCHAR" />
+    <result column="bdesc2" property="bdesc2" jdbcType="VARCHAR" />
+    <result column="bdesc3" property="bdesc3" jdbcType="VARCHAR" />
+    <result column="bdesc4" property="bdesc4" jdbcType="VARCHAR" />
+    <result column="ishot" property="ishot" jdbcType="INTEGER" />
+    <result column="bdate" property="bdate" jdbcType="TIMESTAMP" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="publishingdate" property="publishingdate" jdbcType="TIMESTAMP" />
+    <result column="publishinglocation" property="publishinglocation" jdbcType="VARCHAR" />
+    <result column="repertorylocation" property="repertorylocation" jdbcType="VARCHAR" />
+    <result column="authorname" property="authorname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bid, bname, image, num, bdesc1, bdesc2, bdesc3, bdesc4, ishot, bdate, cid, publishingdate, 
+    publishinglocation, repertorylocation, authorname
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.timmy.po.BookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from book
+    where bid = #{bid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.timmy.po.BookExample" >
+    delete from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.timmy.po.Book" >
+    insert into book (bid, bname, image, 
+      num, bdesc1, bdesc2, 
+      bdesc3, bdesc4, ishot, 
+      bdate, cid, publishingdate, 
+      publishinglocation, repertorylocation, 
+      authorname)
+    values (#{bid,jdbcType=INTEGER}, #{bname,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER}, #{bdesc1,jdbcType=VARCHAR}, #{bdesc2,jdbcType=VARCHAR}, 
+      #{bdesc3,jdbcType=VARCHAR}, #{bdesc4,jdbcType=VARCHAR}, #{ishot,jdbcType=INTEGER}, 
+      #{bdate,jdbcType=TIMESTAMP}, #{cid,jdbcType=INTEGER}, #{publishingdate,jdbcType=TIMESTAMP}, 
+      #{publishinglocation,jdbcType=VARCHAR}, #{repertorylocation,jdbcType=VARCHAR}, 
+      #{authorname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.timmy.po.Book" >
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        bid,
+      </if>
+      <if test="bname != null" >
+        bname,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="bdesc1 != null" >
+        bdesc1,
+      </if>
+      <if test="bdesc2 != null" >
+        bdesc2,
+      </if>
+      <if test="bdesc3 != null" >
+        bdesc3,
+      </if>
+      <if test="bdesc4 != null" >
+        bdesc4,
+      </if>
+      <if test="ishot != null" >
+        ishot,
+      </if>
+      <if test="bdate != null" >
+        bdate,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="publishingdate != null" >
+        publishingdate,
+      </if>
+      <if test="publishinglocation != null" >
+        publishinglocation,
+      </if>
+      <if test="repertorylocation != null" >
+        repertorylocation,
+      </if>
+      <if test="authorname != null" >
+        authorname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="bname != null" >
+        #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="bdesc1 != null" >
+        #{bdesc1,jdbcType=VARCHAR},
+      </if>
+      <if test="bdesc2 != null" >
+        #{bdesc2,jdbcType=VARCHAR},
+      </if>
+      <if test="bdesc3 != null" >
+        #{bdesc3,jdbcType=VARCHAR},
+      </if>
+      <if test="bdesc4 != null" >
+        #{bdesc4,jdbcType=VARCHAR},
+      </if>
+      <if test="ishot != null" >
+        #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="bdate != null" >
+        #{bdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="publishingdate != null" >
+        #{publishingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishinglocation != null" >
+        #{publishinglocation,jdbcType=VARCHAR},
+      </if>
+      <if test="repertorylocation != null" >
+        #{repertorylocation,jdbcType=VARCHAR},
+      </if>
+      <if test="authorname != null" >
+        #{authorname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.timmy.po.BookExample" resultType="java.lang.Integer" >
+    select count(*) from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update book
+    <set >
+      <if test="record.bid != null" >
+        bid = #{record.bid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bname != null" >
+        bname = #{record.bname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.num != null" >
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
+      <if test="record.bdesc1 != null" >
+        bdesc1 = #{record.bdesc1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bdesc2 != null" >
+        bdesc2 = #{record.bdesc2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bdesc3 != null" >
+        bdesc3 = #{record.bdesc3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bdesc4 != null" >
+        bdesc4 = #{record.bdesc4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ishot != null" >
+        ishot = #{record.ishot,jdbcType=INTEGER},
+      </if>
+      <if test="record.bdate != null" >
+        bdate = #{record.bdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.publishingdate != null" >
+        publishingdate = #{record.publishingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.publishinglocation != null" >
+        publishinglocation = #{record.publishinglocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repertorylocation != null" >
+        repertorylocation = #{record.repertorylocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorname != null" >
+        authorname = #{record.authorname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update book
+    set bid = #{record.bid,jdbcType=INTEGER},
+      bname = #{record.bname,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      num = #{record.num,jdbcType=INTEGER},
+      bdesc1 = #{record.bdesc1,jdbcType=VARCHAR},
+      bdesc2 = #{record.bdesc2,jdbcType=VARCHAR},
+      bdesc3 = #{record.bdesc3,jdbcType=VARCHAR},
+      bdesc4 = #{record.bdesc4,jdbcType=VARCHAR},
+      ishot = #{record.ishot,jdbcType=INTEGER},
+      bdate = #{record.bdate,jdbcType=TIMESTAMP},
+      cid = #{record.cid,jdbcType=INTEGER},
+      publishingdate = #{record.publishingdate,jdbcType=TIMESTAMP},
+      publishinglocation = #{record.publishinglocation,jdbcType=VARCHAR},
+      repertorylocation = #{record.repertorylocation,jdbcType=VARCHAR},
+      authorname = #{record.authorname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.timmy.po.Book" >
+    update book
+    <set >
+      <if test="bname != null" >
+        bname = #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="bdesc1 != null" >
+        bdesc1 = #{bdesc1,jdbcType=VARCHAR},
+      </if>
+      <if test="bdesc2 != null" >
+        bdesc2 = #{bdesc2,jdbcType=VARCHAR},
+      </if>
+      <if test="bdesc3 != null" >
+        bdesc3 = #{bdesc3,jdbcType=VARCHAR},
+      </if>
+      <if test="bdesc4 != null" >
+        bdesc4 = #{bdesc4,jdbcType=VARCHAR},
+      </if>
+      <if test="ishot != null" >
+        ishot = #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="bdate != null" >
+        bdate = #{bdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="publishingdate != null" >
+        publishingdate = #{publishingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishinglocation != null" >
+        publishinglocation = #{publishinglocation,jdbcType=VARCHAR},
+      </if>
+      <if test="repertorylocation != null" >
+        repertorylocation = #{repertorylocation,jdbcType=VARCHAR},
+      </if>
+      <if test="authorname != null" >
+        authorname = #{authorname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.timmy.po.Book" >
+    update book
+    set bname = #{bname,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      bdesc1 = #{bdesc1,jdbcType=VARCHAR},
+      bdesc2 = #{bdesc2,jdbcType=VARCHAR},
+      bdesc3 = #{bdesc3,jdbcType=VARCHAR},
+      bdesc4 = #{bdesc4,jdbcType=VARCHAR},
+      ishot = #{ishot,jdbcType=INTEGER},
+      bdate = #{bdate,jdbcType=TIMESTAMP},
+      cid = #{cid,jdbcType=INTEGER},
+      publishingdate = #{publishingdate,jdbcType=TIMESTAMP},
+      publishinglocation = #{publishinglocation,jdbcType=VARCHAR},
+      repertorylocation = #{repertorylocation,jdbcType=VARCHAR},
+      authorname = #{authorname,jdbcType=VARCHAR}
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+</mapper>

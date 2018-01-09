@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.BorrowbookMapper" >
+  <resultMap id="BaseResultMap" type="com.timmy.po.Borrowbook" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="bid" property="bid" jdbcType="INTEGER" />
+    <result column="borrowtime" property="borrowtime" jdbcType="INTEGER" />
+    <result column="borrowend" property="borrowend" jdbcType="DATE" />
+    <result column="owe" property="owe" jdbcType="DOUBLE" />
+    <result column="borrownum" property="borrownum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, uid, bid, borrowtime, borrowend, owe, borrownum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.timmy.po.BorrowbookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from borrowbook
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from borrowbook
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from borrowbook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.timmy.po.BorrowbookExample" >
+    delete from borrowbook
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.timmy.po.Borrowbook" >
+    insert into borrowbook (id, uid, bid, 
+      borrowtime, borrowend, owe, 
+      borrownum)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{bid,jdbcType=INTEGER}, 
+      #{borrowtime,jdbcType=INTEGER}, #{borrowend,jdbcType=DATE}, #{owe,jdbcType=DOUBLE}, 
+      #{borrownum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.timmy.po.Borrowbook" >
+    insert into borrowbook
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="bid != null" >
+        bid,
+      </if>
+      <if test="borrowtime != null" >
+        borrowtime,
+      </if>
+      <if test="borrowend != null" >
+        borrowend,
+      </if>
+      <if test="owe != null" >
+        owe,
+      </if>
+      <if test="borrownum != null" >
+        borrownum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="bid != null" >
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="borrowtime != null" >
+        #{borrowtime,jdbcType=INTEGER},
+      </if>
+      <if test="borrowend != null" >
+        #{borrowend,jdbcType=DATE},
+      </if>
+      <if test="owe != null" >
+        #{owe,jdbcType=DOUBLE},
+      </if>
+      <if test="borrownum != null" >
+        #{borrownum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.timmy.po.BorrowbookExample" resultType="java.lang.Integer" >
+    select count(*) from borrowbook
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update borrowbook
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bid != null" >
+        bid = #{record.bid,jdbcType=INTEGER},
+      </if>
+      <if test="record.borrowtime != null" >
+        borrowtime = #{record.borrowtime,jdbcType=INTEGER},
+      </if>
+      <if test="record.borrowend != null" >
+        borrowend = #{record.borrowend,jdbcType=DATE},
+      </if>
+      <if test="record.owe != null" >
+        owe = #{record.owe,jdbcType=DOUBLE},
+      </if>
+      <if test="record.borrownum != null" >
+        borrownum = #{record.borrownum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update borrowbook
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      bid = #{record.bid,jdbcType=INTEGER},
+      borrowtime = #{record.borrowtime,jdbcType=INTEGER},
+      borrowend = #{record.borrowend,jdbcType=DATE},
+      owe = #{record.owe,jdbcType=DOUBLE},
+      borrownum = #{record.borrownum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.timmy.po.Borrowbook" >
+    update borrowbook
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="bid != null" >
+        bid = #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="borrowtime != null" >
+        borrowtime = #{borrowtime,jdbcType=INTEGER},
+      </if>
+      <if test="borrowend != null" >
+        borrowend = #{borrowend,jdbcType=DATE},
+      </if>
+      <if test="owe != null" >
+        owe = #{owe,jdbcType=DOUBLE},
+      </if>
+      <if test="borrownum != null" >
+        borrownum = #{borrownum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.timmy.po.Borrowbook" >
+    update borrowbook
+    set uid = #{uid,jdbcType=INTEGER},
+      bid = #{bid,jdbcType=INTEGER},
+      borrowtime = #{borrowtime,jdbcType=INTEGER},
+      borrowend = #{borrowend,jdbcType=DATE},
+      owe = #{owe,jdbcType=DOUBLE},
+      borrownum = #{borrownum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

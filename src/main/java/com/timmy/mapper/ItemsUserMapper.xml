@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.ItemsUserMapper" >
+
+    <select id="checkUsername" parameterType="java.lang.String"  resultType="com.timmy.po.ItemsUser">
+        select * from user where username='${value}';
+    </select>
+
+    <select id="checkEmail" parameterType="java.lang.String"  resultType="com.timmy.po.ItemsUser">
+        select * from user where email="${value}";
+    </select>
+    <select id="checkPhone" parameterType="java.lang.String"  resultType="com.timmy.po.ItemsUser">
+        select * from user where phone='${value}';
+    </select>
+
+    <select id="userActive" parameterType="java.lang.String"  resultType="com.timmy.po.ItemsUser">
+        select * from user where code='${value}';
+    </select>
+
+    <select id="userLogin" parameterType="java.lang.String"  resultType="com.timmy.po.ItemsUser">
+        select * from user where username='${value}';
+    </select>
+
+    <select id="getUserCount"   resultType="java.lang.Integer">
+             SELECT count(*) from user;
+    </select>
+
+    <select id="getUsers" resultType="com.timmy.po.ItemsUser">
+                     SELECT * from user LIMIT #{0},#{1};
+    </select>
+
+    <select id="getUser" parameterType="java.lang.Integer" resultType="com.timmy.po.ItemsUser">
+        SELECT * from user where uid=${value};
+    </select>
+
+
+    <select id="getSomeUserCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+                select count(*) from user where username like '%${value}%';
+    </select>
+
+    <select id="getSomeUser" parameterType="com.timmy.utils.BookInfoQueryVo"   resultType="com.timmy.po.ItemsUser">
+                SELECT * from user where username like '%${paraBean.name}%' LIMIT ${paraBean.begin},${paraBean.pageSize};
+    </select>
+
+    <select id="getUserByName" parameterType="java.lang.String"   resultType="com.timmy.po.ItemsUser">
+        SELECT * from user where username ="${value}";
+    </select>
+
+    <select id="getUserByNameAndPassword" parameterType="com.timmy.utils.UserqueryVo" resultType="com.timmy.po.User">
+                SELECT * from user where username ="${userParaBean.username}" and password="${userParaBean.password}";
+    </select>
+</mapper>

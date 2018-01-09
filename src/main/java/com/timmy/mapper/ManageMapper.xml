@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.ManageMapper" >
+  <resultMap id="BaseResultMap" type="com.timmy.po.ManageKey" >
+    <id column="manageid" property="manageid" jdbcType="INTEGER" />
+    <id column="managerid" property="managerid" jdbcType="INTEGER" />
+    <id column="borrowerid" property="borrowerid" jdbcType="INTEGER" />
+    <id column="borrowerbookid" property="borrowerbookid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    manageid, managerid, borrowerid, borrowerbookid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.timmy.po.ManageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from manage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.timmy.po.ManageKey" >
+    delete from manage
+    where manageid = #{manageid,jdbcType=INTEGER}
+      and managerid = #{managerid,jdbcType=INTEGER}
+      and borrowerid = #{borrowerid,jdbcType=INTEGER}
+      and borrowerbookid = #{borrowerbookid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.timmy.po.ManageExample" >
+    delete from manage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.timmy.po.ManageKey" >
+    insert into manage (manageid, managerid, borrowerid, 
+      borrowerbookid)
+    values (#{manageid,jdbcType=INTEGER}, #{managerid,jdbcType=INTEGER}, #{borrowerid,jdbcType=INTEGER}, 
+      #{borrowerbookid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.timmy.po.ManageKey" >
+    insert into manage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="manageid != null" >
+        manageid,
+      </if>
+      <if test="managerid != null" >
+        managerid,
+      </if>
+      <if test="borrowerid != null" >
+        borrowerid,
+      </if>
+      <if test="borrowerbookid != null" >
+        borrowerbookid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="manageid != null" >
+        #{manageid,jdbcType=INTEGER},
+      </if>
+      <if test="managerid != null" >
+        #{managerid,jdbcType=INTEGER},
+      </if>
+      <if test="borrowerid != null" >
+        #{borrowerid,jdbcType=INTEGER},
+      </if>
+      <if test="borrowerbookid != null" >
+        #{borrowerbookid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.timmy.po.ManageExample" resultType="java.lang.Integer" >
+    select count(*) from manage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update manage
+    <set >
+      <if test="record.manageid != null" >
+        manageid = #{record.manageid,jdbcType=INTEGER},
+      </if>
+      <if test="record.managerid != null" >
+        managerid = #{record.managerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.borrowerid != null" >
+        borrowerid = #{record.borrowerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.borrowerbookid != null" >
+        borrowerbookid = #{record.borrowerbookid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update manage
+    set manageid = #{record.manageid,jdbcType=INTEGER},
+      managerid = #{record.managerid,jdbcType=INTEGER},
+      borrowerid = #{record.borrowerid,jdbcType=INTEGER},
+      borrowerbookid = #{record.borrowerbookid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

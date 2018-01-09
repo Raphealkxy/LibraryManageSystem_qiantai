@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.BookinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.timmy.po.Bookinfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="bookname" property="bookname" jdbcType="VARCHAR" />
+    <result column="booknum" property="booknum" jdbcType="VARCHAR" />
+    <result column="authorname" property="authorname" jdbcType="VARCHAR" />
+    <result column="publishinghouse" property="publishinghouse" jdbcType="VARCHAR" />
+    <result column="publishingDate" property="publishingdate" jdbcType="DATE" />
+    <result column="repertorynum" property="repertorynum" jdbcType="INTEGER" />
+    <result column="repertorylocation" property="repertorylocation" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, bookname, booknum, authorname, publishinghouse, publishingDate, repertorynum, 
+    repertorylocation
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.timmy.po.BookinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bookinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bookinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bookinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.timmy.po.BookinfoExample" >
+    delete from bookinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.timmy.po.Bookinfo" >
+    insert into bookinfo (id, bookname, booknum, 
+      authorname, publishinghouse, publishingDate, 
+      repertorynum, repertorylocation)
+    values (#{id,jdbcType=INTEGER}, #{bookname,jdbcType=VARCHAR}, #{booknum,jdbcType=VARCHAR}, 
+      #{authorname,jdbcType=VARCHAR}, #{publishinghouse,jdbcType=VARCHAR}, #{publishingdate,jdbcType=DATE}, 
+      #{repertorynum,jdbcType=INTEGER}, #{repertorylocation,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.timmy.po.Bookinfo" >
+    insert into bookinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bookname != null" >
+        bookname,
+      </if>
+      <if test="booknum != null" >
+        booknum,
+      </if>
+      <if test="authorname != null" >
+        authorname,
+      </if>
+      <if test="publishinghouse != null" >
+        publishinghouse,
+      </if>
+      <if test="publishingdate != null" >
+        publishingDate,
+      </if>
+      <if test="repertorynum != null" >
+        repertorynum,
+      </if>
+      <if test="repertorylocation != null" >
+        repertorylocation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bookname != null" >
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="booknum != null" >
+        #{booknum,jdbcType=VARCHAR},
+      </if>
+      <if test="authorname != null" >
+        #{authorname,jdbcType=VARCHAR},
+      </if>
+      <if test="publishinghouse != null" >
+        #{publishinghouse,jdbcType=VARCHAR},
+      </if>
+      <if test="publishingdate != null" >
+        #{publishingdate,jdbcType=DATE},
+      </if>
+      <if test="repertorynum != null" >
+        #{repertorynum,jdbcType=INTEGER},
+      </if>
+      <if test="repertorylocation != null" >
+        #{repertorylocation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.timmy.po.BookinfoExample" resultType="java.lang.Integer" >
+    select count(*) from bookinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bookinfo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookname != null" >
+        bookname = #{record.bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.booknum != null" >
+        booknum = #{record.booknum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorname != null" >
+        authorname = #{record.authorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishinghouse != null" >
+        publishinghouse = #{record.publishinghouse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishingdate != null" >
+        publishingDate = #{record.publishingdate,jdbcType=DATE},
+      </if>
+      <if test="record.repertorynum != null" >
+        repertorynum = #{record.repertorynum,jdbcType=INTEGER},
+      </if>
+      <if test="record.repertorylocation != null" >
+        repertorylocation = #{record.repertorylocation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bookinfo
+    set id = #{record.id,jdbcType=INTEGER},
+      bookname = #{record.bookname,jdbcType=VARCHAR},
+      booknum = #{record.booknum,jdbcType=VARCHAR},
+      authorname = #{record.authorname,jdbcType=VARCHAR},
+      publishinghouse = #{record.publishinghouse,jdbcType=VARCHAR},
+      publishingDate = #{record.publishingdate,jdbcType=DATE},
+      repertorynum = #{record.repertorynum,jdbcType=INTEGER},
+      repertorylocation = #{record.repertorylocation,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.timmy.po.Bookinfo" >
+    update bookinfo
+    <set >
+      <if test="bookname != null" >
+        bookname = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="booknum != null" >
+        booknum = #{booknum,jdbcType=VARCHAR},
+      </if>
+      <if test="authorname != null" >
+        authorname = #{authorname,jdbcType=VARCHAR},
+      </if>
+      <if test="publishinghouse != null" >
+        publishinghouse = #{publishinghouse,jdbcType=VARCHAR},
+      </if>
+      <if test="publishingdate != null" >
+        publishingDate = #{publishingdate,jdbcType=DATE},
+      </if>
+      <if test="repertorynum != null" >
+        repertorynum = #{repertorynum,jdbcType=INTEGER},
+      </if>
+      <if test="repertorylocation != null" >
+        repertorylocation = #{repertorylocation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.timmy.po.Bookinfo" >
+    update bookinfo
+    set bookname = #{bookname,jdbcType=VARCHAR},
+      booknum = #{booknum,jdbcType=VARCHAR},
+      authorname = #{authorname,jdbcType=VARCHAR},
+      publishinghouse = #{publishinghouse,jdbcType=VARCHAR},
+      publishingDate = #{publishingdate,jdbcType=DATE},
+      repertorynum = #{repertorynum,jdbcType=INTEGER},
+      repertorylocation = #{repertorylocation,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

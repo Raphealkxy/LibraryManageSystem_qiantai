@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.BorrowerMapper" >
+  <resultMap id="BaseResultMap" type="com.timmy.po.Borrower" >
+    <id column="borrowerid" property="borrowerid" jdbcType="INTEGER" />
+    <result column="borrowername" property="borrowername" jdbcType="VARCHAR" />
+    <result column="borrowernum" property="borrowernum" jdbcType="VARCHAR" />
+    <result column="borrowerclass" property="borrowerclass" jdbcType="VARCHAR" />
+    <result column="borrowerdepartment" property="borrowerdepartment" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    borrowerid, borrowername, borrowernum, borrowerclass, borrowerdepartment
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.timmy.po.BorrowerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from borrower
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from borrower
+    where borrowerid = #{borrowerid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from borrower
+    where borrowerid = #{borrowerid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.timmy.po.BorrowerExample" >
+    delete from borrower
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.timmy.po.Borrower" >
+    insert into borrower (borrowerid, borrowername, borrowernum, 
+      borrowerclass, borrowerdepartment)
+    values (#{borrowerid,jdbcType=INTEGER}, #{borrowername,jdbcType=VARCHAR}, #{borrowernum,jdbcType=VARCHAR}, 
+      #{borrowerclass,jdbcType=VARCHAR}, #{borrowerdepartment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.timmy.po.Borrower" >
+    insert into borrower
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="borrowerid != null" >
+        borrowerid,
+      </if>
+      <if test="borrowername != null" >
+        borrowername,
+      </if>
+      <if test="borrowernum != null" >
+        borrowernum,
+      </if>
+      <if test="borrowerclass != null" >
+        borrowerclass,
+      </if>
+      <if test="borrowerdepartment != null" >
+        borrowerdepartment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="borrowerid != null" >
+        #{borrowerid,jdbcType=INTEGER},
+      </if>
+      <if test="borrowername != null" >
+        #{borrowername,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowernum != null" >
+        #{borrowernum,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowerclass != null" >
+        #{borrowerclass,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowerdepartment != null" >
+        #{borrowerdepartment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.timmy.po.BorrowerExample" resultType="java.lang.Integer" >
+    select count(*) from borrower
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update borrower
+    <set >
+      <if test="record.borrowerid != null" >
+        borrowerid = #{record.borrowerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.borrowername != null" >
+        borrowername = #{record.borrowername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrowernum != null" >
+        borrowernum = #{record.borrowernum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrowerclass != null" >
+        borrowerclass = #{record.borrowerclass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrowerdepartment != null" >
+        borrowerdepartment = #{record.borrowerdepartment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update borrower
+    set borrowerid = #{record.borrowerid,jdbcType=INTEGER},
+      borrowername = #{record.borrowername,jdbcType=VARCHAR},
+      borrowernum = #{record.borrowernum,jdbcType=VARCHAR},
+      borrowerclass = #{record.borrowerclass,jdbcType=VARCHAR},
+      borrowerdepartment = #{record.borrowerdepartment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.timmy.po.Borrower" >
+    update borrower
+    <set >
+      <if test="borrowername != null" >
+        borrowername = #{borrowername,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowernum != null" >
+        borrowernum = #{borrowernum,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowerclass != null" >
+        borrowerclass = #{borrowerclass,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowerdepartment != null" >
+        borrowerdepartment = #{borrowerdepartment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where borrowerid = #{borrowerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.timmy.po.Borrower" >
+    update borrower
+    set borrowername = #{borrowername,jdbcType=VARCHAR},
+      borrowernum = #{borrowernum,jdbcType=VARCHAR},
+      borrowerclass = #{borrowerclass,jdbcType=VARCHAR},
+      borrowerdepartment = #{borrowerdepartment,jdbcType=VARCHAR}
+    where borrowerid = #{borrowerid,jdbcType=INTEGER}
+  </update>
+</mapper>

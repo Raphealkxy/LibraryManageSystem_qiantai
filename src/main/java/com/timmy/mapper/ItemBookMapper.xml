@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.ItemBookMapper" >
+     <select id="getNewestBook" parameterType="java.lang.Integer" resultType="com.timmy.po.ItemBook">
+       select * from book ORDER BY bdate DESC LIMIT ${value};
+     </select>
+
+  <select id="gethotBook" parameterType="java.lang.Integer" resultType="com.timmy.po.ItemBook">
+          select * from book where ishot=1 ORDER BY bdate DESC LIMIT ${value};
+
+  </select>
+
+    <select id="getBook" parameterType="java.lang.Integer" resultType="com.timmy.po.ItemBook">
+        select * from book where bid= ${value};
+
+    </select>
+
+    <select id="getRelativeBook" parameterType="java.lang.Integer" resultType="com.timmy.po.ItemBook">
+        select * from book where cid= ${value} ORDER BY bdate DESC LIMIT 6;
+
+    </select>
+
+    <select id="getCategoryBook" parameterType="com.timmy.utils.BookInfoQueryVo" resultType="com.timmy.po.ItemBook">
+        select * from book where cid= ${bookParaBean.cid} limit ${bookParaBean.begin},${bookParaBean.pageSize};
+    </select>
+
+    <select id="getBookCategoryCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+                 select count(*) from book where cid=${value};
+    </select>
+
+    <select id="querySomeBookCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from book where bname like '%${value}%';
+    </select>
+
+    <select id="querySomeBook" parameterType="com.timmy.utils.BookInfoQueryVo" resultType="com.timmy.po.ItemBook">
+                   select * from book where bname like '%${paraBean.name}%' LIMIT ${paraBean.begin},${paraBean.pageSize};
+    </select>
+    <select id="getbookcount" resultType="java.lang.Integer">
+        select count(*) from book;
+
+    </select>
+
+    <select id="pagedQuery" resultType="com.timmy.po.ItemBook">
+                select * from book LIMIT #{0},#{1};
+    </select>
+
+    <select id="getBookByNameAndAuthorname" parameterType="com.timmy.utils.CheckBookRepeatBean"  resultType="com.timmy.po.ItemBook">
+        select * from book where bname="${bookname}" and authorname="${authorname}";
+    </select>
+</mapper>

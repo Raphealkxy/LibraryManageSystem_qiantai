@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.CheckUserBorrowBooksMapper" >
+
+  <resultMap type="com.timmy.po.User" id="UserBorrowBooksResultMap">
+    <id column="uid" property="uid"></id>
+
+    <collection property="borrowbooks" ofType="com.timmy.po.Borrowbook">
+            <id column="id" property="id"></id>
+      <result column="uid" property="uid"></result>
+      <result column="bid" property="bid"></result>
+      <result column="borrowend" property="borrowend"></result>
+      <result column="owe" property="owe"></result>
+     <association property="book" javaType="com.timmy.po.Book">
+       <id column="bid" property="bid"></id>
+       <result column="image" property="image"></result>
+       <result column="bname" property="bname"></result>
+
+
+     </association>
+
+    </collection>
+  </resultMap>
+
+
+  <select id="getBorrowList" parameterType="java.lang.Integer"  resultMap="UserBorrowBooksResultMap">
+
+select `user`.uid,book.bid,book.image,book.bname,borrowbook.id,borrowbook.borrowend,borrowbook.owe from book,borrowbook,`user` WHERE `user`.uid=borrowbook.uid and book.bid=borrowbook.bid and `user`.uid=${value};
+  </select>
+</mapper>

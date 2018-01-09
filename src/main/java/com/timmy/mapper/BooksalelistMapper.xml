@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.timmy.mapper.BooksalelistMapper" >
+  <resultMap id="BaseResultMap" type="com.timmy.po.Booksalelist" >
+    <id column="booksaleid" property="booksaleid" jdbcType="INTEGER" />
+    <id column="bookid" property="bookid" jdbcType="INTEGER" />
+    <id column="managerid" property="managerid" jdbcType="INTEGER" />
+    <result column="saledbookname" property="saledbookname" jdbcType="VARCHAR" />
+    <result column="saledate" property="saledate" jdbcType="INTEGER" />
+    <result column="salecount" property="salecount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    booksaleid, bookid, managerid, saledbookname, saledate, salecount
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.timmy.po.BooksalelistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from booksalelist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.timmy.po.BooksalelistKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from booksalelist
+    where booksaleid = #{booksaleid,jdbcType=INTEGER}
+      and bookid = #{bookid,jdbcType=INTEGER}
+      and managerid = #{managerid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.timmy.po.BooksalelistKey" >
+    delete from booksalelist
+    where booksaleid = #{booksaleid,jdbcType=INTEGER}
+      and bookid = #{bookid,jdbcType=INTEGER}
+      and managerid = #{managerid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.timmy.po.BooksalelistExample" >
+    delete from booksalelist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.timmy.po.Booksalelist" >
+    insert into booksalelist (booksaleid, bookid, managerid, 
+      saledbookname, saledate, salecount
+      )
+    values (#{booksaleid,jdbcType=INTEGER}, #{bookid,jdbcType=INTEGER}, #{managerid,jdbcType=INTEGER}, 
+      #{saledbookname,jdbcType=VARCHAR}, #{saledate,jdbcType=INTEGER}, #{salecount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.timmy.po.Booksalelist" >
+    insert into booksalelist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="booksaleid != null" >
+        booksaleid,
+      </if>
+      <if test="bookid != null" >
+        bookid,
+      </if>
+      <if test="managerid != null" >
+        managerid,
+      </if>
+      <if test="saledbookname != null" >
+        saledbookname,
+      </if>
+      <if test="saledate != null" >
+        saledate,
+      </if>
+      <if test="salecount != null" >
+        salecount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="booksaleid != null" >
+        #{booksaleid,jdbcType=INTEGER},
+      </if>
+      <if test="bookid != null" >
+        #{bookid,jdbcType=INTEGER},
+      </if>
+      <if test="managerid != null" >
+        #{managerid,jdbcType=INTEGER},
+      </if>
+      <if test="saledbookname != null" >
+        #{saledbookname,jdbcType=VARCHAR},
+      </if>
+      <if test="saledate != null" >
+        #{saledate,jdbcType=INTEGER},
+      </if>
+      <if test="salecount != null" >
+        #{salecount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.timmy.po.BooksalelistExample" resultType="java.lang.Integer" >
+    select count(*) from booksalelist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update booksalelist
+    <set >
+      <if test="record.booksaleid != null" >
+        booksaleid = #{record.booksaleid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookid != null" >
+        bookid = #{record.bookid,jdbcType=INTEGER},
+      </if>
+      <if test="record.managerid != null" >
+        managerid = #{record.managerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.saledbookname != null" >
+        saledbookname = #{record.saledbookname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saledate != null" >
+        saledate = #{record.saledate,jdbcType=INTEGER},
+      </if>
+      <if test="record.salecount != null" >
+        salecount = #{record.salecount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update booksalelist
+    set booksaleid = #{record.booksaleid,jdbcType=INTEGER},
+      bookid = #{record.bookid,jdbcType=INTEGER},
+      managerid = #{record.managerid,jdbcType=INTEGER},
+      saledbookname = #{record.saledbookname,jdbcType=VARCHAR},
+      saledate = #{record.saledate,jdbcType=INTEGER},
+      salecount = #{record.salecount,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.timmy.po.Booksalelist" >
+    update booksalelist
+    <set >
+      <if test="saledbookname != null" >
+        saledbookname = #{saledbookname,jdbcType=VARCHAR},
+      </if>
+      <if test="saledate != null" >
+        saledate = #{saledate,jdbcType=INTEGER},
+      </if>
+      <if test="salecount != null" >
+        salecount = #{salecount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where booksaleid = #{booksaleid,jdbcType=INTEGER}
+      and bookid = #{bookid,jdbcType=INTEGER}
+      and managerid = #{managerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.timmy.po.Booksalelist" >
+    update booksalelist
+    set saledbookname = #{saledbookname,jdbcType=VARCHAR},
+      saledate = #{saledate,jdbcType=INTEGER},
+      salecount = #{salecount,jdbcType=INTEGER}
+    where booksaleid = #{booksaleid,jdbcType=INTEGER}
+      and bookid = #{bookid,jdbcType=INTEGER}
+      and managerid = #{managerid,jdbcType=INTEGER}
+  </update>
+</mapper>

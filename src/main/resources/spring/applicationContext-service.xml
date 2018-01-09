@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="bookService" class="com.timmy.service.impl.BookServiceImp"></bean>
+    <bean id="borrowerService" class="com.timmy.service.impl.BorrowerServiceImp"></bean>
+    <bean id="RegisterService" class="com.timmy.service.impl.RegisterServiceImp"></bean>
+    <bean id="LoginService"  class="com.timmy.service.impl.LoginServiceImp"></bean>
+    <bean id="aboutService"  class="com.timmy.service.impl.AboutServiceImp"></bean>
+    <bean id="categoryService"  class="com.timmy.service.impl.CategoryServiceImp"></bean>
+    <bean id="roleService"  class="com.timmy.service.impl.RoleServiceImp"></bean>
+    <bean id="resourceService"  class="com.timmy.service.impl.ResourceServiceImp"></bean>
+
+</beans>
